@@ -36,6 +36,9 @@ export default class Timer {
     this.remainingSeconds = this.sessionTypes[currentSessionType].duration;
     this.resetRemaining = this.sessionTypes[currentSessionType].duration;
 
+    this.completionSound = new Audio('audio/gong.wav');
+    this.completionSound.volume = 0.7;
+
     this.generateProgressDots();
     this.updateProgressDots();
     this.updateInterfaceTime();
@@ -173,6 +176,9 @@ export default class Timer {
   }
 
   nextSession() {
+    this.completionSound.play().catch((error) => {
+      console.log('Audio play failed:', error);
+    });
     this.currentSessionIndex++;
     if (this.currentSessionIndex < this.sessions.length) {
       const currentSessionType = this.sessions[this.currentSessionIndex];
