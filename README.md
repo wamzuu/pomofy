@@ -1,5 +1,7 @@
 # Pomofy - Chrome Extension
 
+![Extension Icon](Screenshots/extension-demo.png)
+
 A Pomodoro timer Chrome extension that integrates seamlessly into Spotify Web Player.
 
 ## Features
