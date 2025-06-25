@@ -21,13 +21,13 @@ export default class Timer {
 
     this.sessions = [
       'work',
+      // 'break',
+      // 'work',
+      // 'break',
+      // 'work',
       'break',
-      'work',
-      'break',
-      'work',
-      'break',
-      'work',
-      'longBreak',
+      //'work',
+      //'longBreak',
     ];
 
     this.interval = null;
@@ -44,7 +44,10 @@ export default class Timer {
     this.updateInterfaceTime();
 
     this.el.control.addEventListener('click', () => {
-      if (this.interval === null) {
+      if (this.currentSessionIndex >= this.sessions.length) {
+        this.resetCycle();
+        this.start();
+      } else if (this.interval === null) {
         this.start();
       } else {
         this.stop();
@@ -130,7 +133,7 @@ export default class Timer {
   updateInterfaceControls() {
     if (this.currentSessionIndex >= this.sessions.length) {
       // Cycle complete
-      this.el.control.innerHTML = `Start`;
+      this.el.control.innerHTML = `New Cycle`;
       this.el.control.classList.add('start');
       this.el.control.classList.remove('stop');
     } else if (this.interval === null) {

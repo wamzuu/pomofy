@@ -141,7 +141,7 @@ body {
   transition: background-color 0.2s ease, transform 0.1s ease;
   min-width: 80px;
   text-transform: none;
-  min-width: 110px;
+  min-width: 118px;
 }
 
 .timer-btn:hover {
