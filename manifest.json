@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Pomofy",
+  "version": "1.0.0",
+  "description": "A Pomodoro timer integrated with Spotify Web Player",
+  "content_scripts": [
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["js/content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "permissions": ["storage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["audio/*", "styles.css"],
+      "matches": ["https://open.spotify.com/*"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  }
+}
