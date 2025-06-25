@@ -1,24 +1,47 @@
 export default class Timer {
+  static getHTML() {
+    return `
+            <div class="session-header">
+              <div class="progress-dots"></div>
+              <h3 class="indicator">WORK</h3>
+            </div>
+
+            <div class="timer-wrapper">
+              <div class="timer-display">
+                  <span class="minutes">00</span>
+                  <span class="colon">:</span>
+                  <span class="seconds">00</span>
+              </div>
+            </div>
+
+            <div class="controls">
+                <button class="timer-btn start-pause-btn">Start</button>
+                <button class="timer-btn reset-btn">Reset</button>
+            </div>
+        `;
+  }
+
   constructor(root) {
+    // HTML setup
     root.innerHTML = Timer.getHTML();
 
+    // DOM element refs
     this.el = {
       minutes: root.querySelector('.minutes'),
       seconds: root.querySelector('.seconds'),
-      control: root.querySelector('.control'),
-      reset: root.querySelector('.reset'),
-      timer: root.querySelector('.timer-part'),
-      input: root.querySelector('.timer-input'),
+      control: root.querySelector('.start-pause-btn'),
+      reset: root.querySelector('.reset-btn'),
+      timer: root.querySelector('.timer-display'),
       indicator: root.querySelector('.indicator'),
       progressDots: root.querySelector('.progress-dots'),
     };
 
+    // setup
     this.sessionTypes = {
       work: { duration: 5, label: 'WORK' },
       break: { duration: 3, label: 'BREAK' },
       longBreak: { duration: 10, label: 'LONG BREAK' },
     };
-
     this.sessions = [
       'work',
       // 'break',
@@ -29,20 +52,38 @@ export default class Timer {
       //'work',
       //'longBreak',
     ];
-
     this.interval = null;
     this.currentSessionIndex = 0;
+    this.resetClicked = false;
+
+    // initial values
     const currentSessionType = this.sessions[this.currentSessionIndex];
     this.remainingSeconds = this.sessionTypes[currentSessionType].duration;
     this.resetRemaining = this.sessionTypes[currentSessionType].duration;
 
+    // audio
     this.completionSound = new Audio('audio/gong.wav');
     this.completionSound.volume = 0.7;
 
+    // interface setup
     this.generateProgressDots();
     this.updateProgressDots();
     this.updateInterfaceTime();
 
+    // event listeners
+    this.setupEventListeners();
+  }
+
+  generateProgressDots() {
+    const dotsContainer = this.el.progressDots;
+    this.sessions.forEach((session, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      dot.dataset.index = index;
+      dotsContainer.appendChild(dot);
+    });
+  }
+  setupEventListeners() {
     this.el.control.addEventListener('click', () => {
       if (this.currentSessionIndex >= this.sessions.length) {
         this.resetCycle();
@@ -53,8 +94,6 @@ export default class Timer {
         this.stop();
       }
     });
-
-    this.resetClicked = false;
 
     this.el.reset.addEventListener('click', () => {
       if (!this.resetClicked) {
@@ -75,76 +114,6 @@ export default class Timer {
         this.resetCycle();
       }
     });
-  }
-
-  generateProgressDots() {
-    const dotsContainer = document.querySelector('.progress-dots');
-    this.sessions.forEach((session, index) => {
-      const dot = document.createElement('div');
-      dot.classList.add('dot');
-      dot.dataset.index = index;
-      dotsContainer.appendChild(dot);
-    });
-  }
-
-  updateProgressDots() {
-    const dots = this.el.progressDots.querySelectorAll('.dot');
-
-    dots.forEach((dot, index) => {
-      dot.classList.remove('active', 'completed');
-
-      if (index < this.currentSessionIndex) {
-        dot.classList.add('completed');
-      } else if (index == this.currentSessionIndex) {
-        dot.classList.add('active');
-        if (this.interval == null) {
-          dot.classList.add('paused');
-        } else {
-          dot.classList.remove('paused');
-        }
-      }
-    });
-  }
-
-  resetCycle() {
-    this.currentSessionIndex = 0;
-    const currentSessionType = this.sessions[0];
-    this.remainingSeconds = this.sessionTypes[currentSessionType].duration;
-    this.resetRemaining = this.remainingSeconds;
-    this.stop();
-    this.updateInterfaceTime();
-    this.updateSessionIndicator();
-    this.updateInterfaceControls();
-
-    this.resetClicked = false;
-    this.el.reset.style.backgroundColor = '';
-    this.el.reset.style.color = '';
-    this.el.reset.textContent = 'Reset';
-  }
-
-  updateInterfaceTime() {
-    const minutes = Math.floor(this.remainingSeconds / 60);
-    const seconds = this.remainingSeconds % 60;
-
-    this.el.minutes.textContent = minutes.toString().padStart(2, '0');
-    this.el.seconds.textContent = seconds.toString().padStart(2, '0');
-  }
-
-  updateInterfaceControls() {
-    if (this.currentSessionIndex >= this.sessions.length) {
-      // Cycle complete
-      this.el.control.innerHTML = `New Cycle`;
-      this.el.control.classList.add('start');
-      this.el.control.classList.remove('stop');
-    } else if (this.interval === null) {
-      this.el.control.innerHTML = `Start`;
-      this.el.control.classList.add('start');
-      this.el.control.classList.remove('stop');
-    } else {
-      this.el.control.innerHTML = `Pause`;
-      this.el.control.classList.add('stop');
-      this.el.control.classList.remove('start');
-    }
   }
 
   start() {
@@ -171,13 +140,6 @@ export default class Timer {
     this.updateInterfaceControls();
     this.updateProgressDots();
   }
-
-  sessionStop() {
-    clearInterval(this.interval);
-    this.interval = null;
-    this.updateProgressDots();
-  }
-
   nextSession() {
     this.completionSound.play().catch((error) => {
       console.log('Audio play failed:', error);
@@ -191,37 +153,67 @@ export default class Timer {
       this.updateProgressDots();
     }
   }
+  resetCycle() {
+    this.currentSessionIndex = 0;
+    const currentSessionType = this.sessions[0];
+    this.remainingSeconds = this.sessionTypes[currentSessionType].duration;
+    this.resetRemaining = this.remainingSeconds;
+    this.stop();
+    this.updateInterfaceTime();
+    this.updateSessionIndicator();
+    this.updateInterfaceControls();
 
+    this.resetClicked = false;
+    this.el.reset.style.backgroundColor = '';
+    this.el.reset.style.color = '';
+    this.el.reset.textContent = 'Reset';
+  }
+
+  updateInterfaceTime() {
+    const minutes = Math.floor(this.remainingSeconds / 60);
+    const seconds = this.remainingSeconds % 60;
+
+    this.el.minutes.textContent = minutes.toString().padStart(2, '0');
+    this.el.seconds.textContent = seconds.toString().padStart(2, '0');
+  }
+  updateInterfaceControls() {
+    if (this.currentSessionIndex >= this.sessions.length) {
+      // Cycle complete
+      this.el.control.innerHTML = `New Cycle`;
+      this.el.control.classList.add('start');
+      this.el.control.classList.remove('stop');
+    } else if (this.interval === null) {
+      this.el.control.innerHTML = `Start`;
+      this.el.control.classList.add('start');
+      this.el.control.classList.remove('stop');
+    } else {
+      this.el.control.innerHTML = `Pause`;
+      this.el.control.classList.add('stop');
+      this.el.control.classList.remove('start');
+    }
+  }
   updateSessionIndicator() {
     const currentSessionType = this.sessions[this.currentSessionIndex];
     const label = this.sessionTypes[currentSessionType].label;
     this.el.indicator.textContent = label;
   }
+  updateProgressDots() {
+    const dots = this.el.progressDots.querySelectorAll('.dot');
 
-  static getHTML() {
-    return `
-            
-            <div class="session-header">
-              <div class="progress-dots">
-                <!-- 8 dots generated dynamically -->
-              </div>
-              <h3 class="indicator">WORK</h3>
-            </div>
-            <div class='timer-wrapper'>
-              <div class="timer-part" id="timer-part">
-                  <span class="minutes">00</span>
-                  <span>:</span>
-                  <span class="seconds">00</span>
-              </div>
-            </div>
+    dots.forEach((dot, index) => {
+      dot.classList.remove('active', 'completed');
 
-            
-        
-            <div class="controls">
-                <button class="timer-btn control start" id="start">Start</button>
-                <button class="timer-btn reset" id="reset">Reset</button>
-            </div>
-        `;
+      if (index < this.currentSessionIndex) {
+        dot.classList.add('completed');
+      } else if (index == this.currentSessionIndex) {
+        dot.classList.add('active');
+        if (this.interval == null) {
+          dot.classList.add('paused');
+        } else {
+          dot.classList.remove('paused');
+        }
+      }
+    });
   }
 }
 
