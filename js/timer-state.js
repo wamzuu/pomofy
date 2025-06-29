@@ -1,7 +1,7 @@
 class TimerState {
   constructor() {
-    this.sessionTypes = TestTypes;
-    this.sessions = SessionTest;
+    this.sessionTypes = SessionTypes;
+    this.sessions = DefaultSessions;
 
     // Timer State
     this.interval = null;
