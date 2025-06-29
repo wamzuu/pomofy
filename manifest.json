@@ -6,13 +6,19 @@
   "content_scripts": [
     {
       "matches": ["https://open.spotify.com/*"],
-      "js": ["content.js"]
+      "js": [
+        "js/constants.js",
+        "js/timer-state.js",
+        "js/favicon-manager.js",
+        "js/ui-manager.js",
+        "js/content.js"
+      ]
     }
   ],
   "permissions": ["storage"],
   "web_accessible_resources": [
     {
-      "resources": ["audio/*"],
+      "resources": ["audio/*", "images/favicons/*"],
       "matches": ["https://open.spotify.com/*"]
     }
   ],
