@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pomofy Settings</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Settings</h1>
+      <div class="timer-settings">
+        <h2>Timer Settings (minutes)</h2>
+        <div class="input-group">
+          <label for="workDuration">Work:</label>
+          <input type="number" id="workDuration" value="0" min="1" max="60" />
+        </div>
+        <div class="input-group">
+          <label for="breakDuration">Short Break:</label>
+          <input type="number" id="breakDuration" value="0" min="1" max="30" />
+        </div>
+        <div class="input-group">
+          <label for="longBreakDuration">Long Break:</label>
+          <input
+            type="number"
+            id="longBreakDuration"
+            value="0"
+            min="1"
+            max="60"
+          />
+        </div>
+      </div>
+
+      <div class="preset-section">
+        <h2>Presets</h2>
+        <select id="quickPreset">
+          <option value="classic">Classic (25/5/15)</option>
+          <option value="focus">Deep Focus (50/10/30)</option>
+          <option value="sprint">Quick Sprint (15/3/10)</option>
+          <option value="custom">Custom...</option>
+        </select>
+      </div>
+
+      <div class="cycle-settings">
+        <h2>Cycle Configuration</h2>
+        <div class="input-group">
+          <label for="workSessions">Work sessions per cycle:</label>
+          <input type="number" id="workSessions" value="4" min="2" max="8" />
+        </div>
+      </div>
+
+      <div class="notification-sounds">
+        <h2>Completion sound</h2>
+        <div class="input-group">
+          <select id="notificationSound">
+            <option value="gong">Gong</option>
+            <option value="beep">Beep</option>
+          </select>
+          <button id="testSound" class="test-btn">Test</button>
+        </div>
+
+        <div class="input-group">
+          <label for="soundVolume">Volume:</label>
+          <div class="volume-control">
+            <div class="volume-slider">
+              <input type="range" id="soundVolume" min="0" max="100" value="50" />
+              <progress id="volumeProgress" min="0" max="100" value="50"></progress>
+            </div>
+            <span id="volumeValue">50%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="extras">
+        <h2>Extras</h2>
+        <div class="input-group">
+          <label for="autoContinue">Auto-start next session:</label>
+          <label class="switch">
+            <input type="checkbox" id="autoContinue" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="input-group">
+          <label for="showInTitle">Show timer in tab title:</label>
+          <label class="switch">
+            <input type="checkbox" id="showInTitle" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="defaultSettings">Reset to Default</button>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

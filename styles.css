@@ -1,149 +1,321 @@
-/* =================================
-   BASE STYLES
-   ================================= */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 5px white;
+}
+
 body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #000000;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-}
-
-/* =================================
-   MAIN TIMER CONTAINER
-   ================================= */
-.timer {
-  width: 320px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: white;
   background-color: #121212;
-  border-radius: 8px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}  
+  width: 350px;
+  min-height: 500px;
+}
 
-/* =================================
-   SESSION HEADER
-   ================================= */
-.session-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+.container {
+  padding: 20px;
+}
+
+/* Headers */
+h1 {
+  color: #1db954;
+  font-size: 24px;
+  font-weight: 700;
   margin-bottom: 24px;
+  text-align: center;
 }
 
-.indicator{
-  color:#1db954;
-  font-weight: 300;
-  margin: 0;
+h2 {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  margin-top: 24px;
 }
 
-/* =================================
-   PROGRESS DOTS
-   ================================= */
-.progress-dots {
-  display: flex;
-  gap: 8px;
+/* Sections */
+.timer-settings,
+.cycle-settings,
+.notification-sounds,
+.preset-section {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #333;
 }
 
-.dot{
-  width: 8px;
-  height: 8px;
+/* Input groups */
+.input-group {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.input-group label {
+  color: #b3b3b3;
+  font-size: 14px;
+  flex: 1;
+}
+
+/* Form inputs */
+input[type='number'] {
+  background-color: #1f1f1f;
+  border: none;
+  border-radius: 4px;
+  color: #b3b3b3;
+  padding: 8px 12px;
+  width: 80px;
+  font-size: 14px;
+}
+
+input[type='number']:hover {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+select {
+  background-color: #1f1f1f;
+  border: none;
+  border-radius: 4px;
+  color: #b3b3b3;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 70%;
+  border-right: 10px solid #1f1f1f;
+}
+
+select:hover {
+  background-color: #2a2a2a;
+  color: white;
+  border-right: 10px solid #2a2a2a;
+}
+
+select:focus,
+input[type='number']:focus {
+  outline: none;
+  background-color: #2a2a2a;
+  color: white;
+  border-right: 10px solid #2a2a2a;
+  box-shadow: 0 0 0 2px #1db954;
+}
+
+/* Preset section */
+#quickPreset {
+  width: 100%;
+}
+
+.preset-section label {
+  display: block;
+  margin-bottom: 8px;
+  color: #b3b3b3;
+  font-size: 14px;
+}
+
+/* File input */
+.custom-sound {
+  margin-top: 12px;
+}
+.custom-sound label {
+  display: block;
+  margin-bottom: 8px;
+  color: #b3b3b3;
+  font-size: 14px;
+}
+
+input[type='file'] {
+  background-color: #2a2a2a;
+  border: 1px solid #535353;
+  border-radius: 4px;
+  color: #b3b3b3;
+  padding: 8px;
+  width: 100%;
+  font-size: 12px;
+}
+
+.test-btn {
+  background-color: transparent;
+  border: 1px solid #535353;
+  color: #b3b3b3;
+  padding: 6px 12px;
+  margin-left: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: 0.4s ease;
+}
+
+.test-btn:hover {
+  border-color: white;
+  color: white;
+}
+
+.test-btn:active {
+  background-color: #1db954;
+  border-color: transparent;
+  scale: 0.98;
+}
+
+/* Toggle switches */
+.switch {
+  position: relative;
+  display: inline-block;
+  height: 28px;
+  width: 54px;
+  flex-shrink: 0;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: #535353;
+  border-radius: 24px;
+  width: 54px;
+}
+.slider:hover {
+  background-color: #b3b3b3;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 24px;
+  width: 24px;
+  left: 2px;
+  bottom: 2px;
   border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-
-.dot.active {
   background-color: white;
-  animation: pulse 2s ease-in-out infinite;
 }
 
-.dot.active.paused {
-  animation: none;
-}
-
-.dot.completed {
+input:checked + .slider {
   background-color: #1db954;
 }
-
-@keyframes pulse {
-  0%, 100% { 
-    opacity: 1; 
-  }
-  50% { 
-    opacity: 0.6; 
-  }
+input:checked + .slider:hover {
+  background-color: #1ed760;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
 
-/* =================================
-   TIMER DISPLAY
-   ================================= */
-.timer-wrapper {
-  position: relative;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.timer-display {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 64px;
-  letter-spacing: -1px;
-  gap: 4px;
-}
-
-.minutes, .seconds {
-  font-variant-numeric: tabular-nums;
-  min-width: 1.2em;
-  text-align: center;
-}
-
-/* =================================
-   CONTROLS & BUTTONS
-   ================================= */
-.controls {
+/* Buttons */
+.button-group {
   display: flex;
   gap: 12px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+}
+button {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-.timer-btn {
-  padding: 12px 24px;
+#saveSettings {
   background-color: #1db954;
   color: black;
-  border: none;
-  border-radius: 500px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
-  transition: background-color 0.2s ease;
-  text-transform: none;
-  min-width: 118px;
 }
 
-.timer-btn:hover {
+#saveSettings:hover {
   background-color: #1ed760;
 }
 
-.timer-btn.reset-btn {
+#defaultSettings {
   background-color: transparent;
   color: #b3b3b3;
   border: 1px solid #535353;
-  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
-.timer-btn.reset-btn:hover {
-  background-color: transparent;
+#defaultSettings:hover {
+  background-color: #e22134;
   color: #ffffff;
-  border-color: #b3b3b3;
+  border-color: transparent;
 }
-  
-  
+
+/* Volume control styling */
+/* Volume control container */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Volume slider with progress overlay */
+.volume-slider {
+  position: relative;
+  width: 160px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* Range input (invisible track, visible thumb) */
+.volume-slider input[type='range'] {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.volume-slider input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #1ed760;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.volume-slider input[type='range']::-webkit-slider-thumb:hover {
+  background: #1db954;
+}
+
+/* Progress bar (shows the fill) */
+.volume-slider progress {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  overflow: hidden;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.volume-slider progress::-webkit-progress-bar {
+  background: #535353;
+  border-radius: 3px;
+}
+
+.volume-slider progress::-webkit-progress-value {
+  background: #1db954;
+  border-radius: 3px;
+}
+
+/* Volume percentage */
+#volumeValue {
+  color: #b3b3b3;
+  font-size: 12px;
+  min-width: 35px;
+  text-align: right;
+}
