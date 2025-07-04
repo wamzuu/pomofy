@@ -1,11 +1,10 @@
 # Pomofy - Chrome Extension
 
-![Logo](images/icon-128.png)
 ![Extension Icon](screenshots/extension-demo.png)
 
 **A free, open-source Pomodoro timer that integrates seamlessly into Spotify Web Player.**
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 **Pomofy is an unofficial browser extension and is not affiliated with, endorsed by, or connected to Spotify AB.** This extension is provided "as is" for productivity purposes and does not modify Spotify's core functionality. Spotify is a trademark of Spotify AB.
 
@@ -37,7 +36,7 @@
 - **Progress dots** in popup show your position in the current cycle
 - **Monitor from any tab** - no need to keep Spotify open
 
-### 🔧 Customization
+### Customization
 
 - **Timer durations**: Set custom work, short break, and long break lengths
 - **Audio notifications**: Choose from different completion sounds with volume control
@@ -101,22 +100,12 @@ _Extension will be available on the Chrome Web Store once published_
 - **No Spotify API usage** - doesn't access your Spotify account data
 - **Minimal permissions** - only requests storage permission for settings
 
-## Contributing
-
-This is an open-source project! Contributions are welcome:
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature-name`
-3. **Make your changes** and test thoroughly
-4. **Submit a pull request** with a clear description
-
 ## Credits
 
 - **Implementation inspiration**: [@rnikkos's Spotify Extension](https://github.com/rnikko/spotify-playback-speed)
 - **Audio**: [Gong sound](https://freesound.org/people/juskiddink/sounds/86773/) by juskiddink (CC Attribution 4.0)
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-_Made with ❤️ for productivity enthusiasts who love Spotify_
