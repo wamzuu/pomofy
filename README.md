@@ -4,6 +4,25 @@
 
 **A free, open-source Pomodoro timer that integrates seamlessly into Spotify Web Player.**
 
+## Table of Contents
+
+- [Disclaimer](#disclaimer)
+- [Features](#features)
+  - [Core Timer Functionality](#core-timer-functionality)
+  - [Spotify Integration](#spotify-integration)
+  - [Visual Indicators](#visual-indicators)
+  - [Customization](#customization)
+- [Installation](#installation)
+  - [Method 1: Chrome Web Store (Coming Soon)](#method-1-chrome-web-store-coming-soon)
+  - [Method 2: Manual Installation (Developer Mode)](#method-2-manual-installation-developer-mode)
+- [Usage](#usage)
+  - [First Time Setup](#first-time-setup)
+  - [Daily Use](#daily-use)
+  - [Customization](#customization-1)
+- [Privacy & Security](#privacy--security)
+- [Credits](#credits)
+- [License](#license)
+
 ## Disclaimer
 
 **Pomofy is an unofficial browser extension and is not affiliated with, endorsed by, or connected to Spotify AB.** This extension is provided "as is" for productivity purposes and does not modify Spotify's core functionality. Spotify is a trademark of Spotify AB.
@@ -108,4 +127,3 @@ _Extension will be available on the Chrome Web Store once published_
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
